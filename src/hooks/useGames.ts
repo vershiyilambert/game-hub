@@ -18,14 +18,22 @@ const apiClient = new APIClient<Game>("/games");
 const useGames = () => {
   const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     apiClient
       .getAll()
-      .then((res) => setGames(res.data.results))
-      .catch((err) => setError(err.message));
+      .then((res) => {
+        setIsLoading(false);
+        setGames(res.data.results);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setIsLoading(false);
+      });
   }, []);
-  return { games, error };
+  return { games, error, isLoading };
 };
 
 export default useGames;
