@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { useEffect, useState } from "react";
-import APIClient from "../services/api-client";
-import { Platform } from "./usePlatforms";
 import useData from "./useData";
+import { Platform } from "./usePlatforms";
 
 export interface Game {
   id: number;
