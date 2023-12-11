@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+import useData from "./useData";
+
 export interface Platform {
   id: number;
   name: string;
@@ -7,6 +9,6 @@ export interface Platform {
 }
 //const apiClient = new APIClient<Platform>("/platforms/lists/parents");
 
-const usePlatforms = () => {};
+const usePlatforms = () => useData<Platform>("/platforms/lists/parents");
 
 export default usePlatforms;
