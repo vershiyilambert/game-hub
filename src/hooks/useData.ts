@@ -1,18 +1,22 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { AxiosRequestConfig } from "axios";
+import { useEffect, useState } from "react";
+import { FetchResponse, axiosInstance } from "../services/api-client";
 
-import { useState, useEffect } from "react";
-import APIClient from "../services/api-client";
-
-const useData = <T>(endpoint: string) => {
+const useData = <T>(
+  endpoint: string,
+  requestConfig?: AxiosRequestConfig,
+  deps?: any[]
+) => {
   const [data, setData] = useState<T[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const apiClient = new APIClient<T>(endpoint);
+    //const apiClient = factory<T>(endpoint);
     setIsLoading(true);
-    apiClient
-      .getAll()
+    axiosInstance
+      .get<FetchResponse<T>>(endpoint)
       .then((res) => {
         setIsLoading(false);
         setData(res.data.results);
@@ -21,7 +25,7 @@ const useData = <T>(endpoint: string) => {
         setError(err.message);
         setIsLoading(false);
       });
-  }, [endpoint]);
+  }, []);
   return { data, error, isLoading };
 };
 

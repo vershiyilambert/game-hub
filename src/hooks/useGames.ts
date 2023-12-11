@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 import useData from "./useData";
+import { Genre } from "./useGenres";
 import { Platform } from "./usePlatforms";
 
 export interface Game {
@@ -12,6 +13,9 @@ export interface Game {
   rating_top: number;
 }
 
-const useGames = () => useData<Game>("/games");
+const useGames = (selectedGenre: Genre | null) =>
+  useData<Game>("/games", { params: { genre: selectedGenre?.id } }, [
+    selectedGenre?.id,
+  ]);
 
 export default useGames;
